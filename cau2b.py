@@ -1,3 +1,5 @@
+# CÂU 2b. Xây dựng chương trình minh họa các giải thuật phân phối CPU cho các tiến trình
+
 # Định nghĩa lớp Tiến Trình
 class TienTrinh:
     def __init__(self, id, thoi_gian_chay, do_uu_tien):

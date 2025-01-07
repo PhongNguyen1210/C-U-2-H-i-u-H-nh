@@ -1,3 +1,5 @@
+# CÂU 2d. Xây dựng chương trình minh họa các giải thuật định thời truy cập đĩa để quản lý hệ thống tập tin.
+
 def FCFS(yeu_cau, dau_doc):
     chuoi_tim_kiem = []  # Danh sách các vị trí đầu đọc di chuyển đến
     so_lan_tim_kiem = 0  # Số lần tìm kiếm

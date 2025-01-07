@@ -1,3 +1,6 @@
+# CÂU 2a. Xây dựng chương trình minh họa giải thuật Banker để phát hiện và giải quyết Deadlock
+
+
 def la_an_toan(tien_trinh, tai_nguyen_kha_dung, tai_nguyen_toi_da, tai_nguyen_phan_bo):
     so_tien_trinh = len(tien_trinh)  # Số lượng tiến trình
     so_tai_nguyen = len(tai_nguyen_kha_dung)  # Số lượng loại tài nguyên

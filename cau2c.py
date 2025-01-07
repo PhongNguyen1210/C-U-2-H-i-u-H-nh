@@ -1,3 +1,5 @@
+# CÂU 2c. Xây dựng chương trình minh họa các giải thuật thay thế trang trong quy trình PFSR.
+
 def FIFO(trang, dung_luong):
     bo_nho = []  # Danh sách lưu trữ các trang trong bộ nhớ
     loi_trang = 0  # Đếm số lần lỗi trang
