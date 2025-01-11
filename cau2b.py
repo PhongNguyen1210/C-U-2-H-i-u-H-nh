@@ -9,7 +9,7 @@ class TienTrinh:
         self.thoi_gian_cho = 0  # Thời gian chờ của tiến trình
         self.thoi_gian_hoan_thanh = 0  # Thời gian hoàn thành của tiến trình
 
-# Thuật toán First-Come, First-Served (FCFS) Thực hiện theo thứ tự tiến trình đến trước, xử lý trước. Tính toán thời gian chờ và thời gian hoàn thành của mỗi tiến trình.
+# Thuật toán First-Come, First-Served (FCFS)
 def fcfs(tien_trinh_list):
     thoi_gian_cho = 0  # Khởi tạo thời gian chờ ban đầu
     for tien_trinh in tien_trinh_list:
@@ -17,14 +17,12 @@ def fcfs(tien_trinh_list):
         tien_trinh.thoi_gian_hoan_thanh = tien_trinh.thoi_gian_cho + tien_trinh.thoi_gian_chay  # Tính thời gian hoàn thành
         thoi_gian_cho += tien_trinh.thoi_gian_chay  # Cập nhật thời gian chờ cho tiến trình tiếp theo
 
-# Thuật toán Shortest Job First (SJF) Sắp xếp các tiến trình theo thời gian chạy ngắn nhất trước, sau đó áp dụng thuật toán FCFS.
+# Thuật toán Shortest Job First (SJF)
 def sjf(tien_trinh_list):
-    # Sắp xếp danh sách tiến trình theo thời gian chạy tăng dần
-    tien_trinh_list.sort(key=lambda x: x.thoi_gian_chay) # lambda x: x.thoi_gian_chay là một hàm ẩn danh, trong đó x là đối tượng trong tien_trinh_list. Hàm này trả về giá trị của thuộc tính thoi_gian_chay của đối tượng x.
+    tien_trinh_list.sort(key=lambda x: x.thoi_gian_chay)  # Sắp xếp danh sách tiến trình theo thời gian chạy tăng dần
     fcfs(tien_trinh_list)  # Áp dụng thuật toán FCFS sau khi sắp xếp
 
-# Thuật toán Round Robin (RR) Xử lý tiến trình theo vòng tròn, mỗi tiến trình được cấp phát một đơn vị thời gian (quantum).
-#  Nếu thời gian chạy của tiến trình lớn hơn quantum, tiến trình sẽ được xử lý tiếp trong vòng tiếp theo.
+# Thuật toán Round Robin (RR)
 def round_robin(tien_trinh_list, quantum):
     thoi_gian = 0  # Khởi tạo thời gian ban đầu
     while True:
@@ -42,10 +40,9 @@ def round_robin(tien_trinh_list, quantum):
         if done:
             break  # Thoát khỏi vòng lặp nếu tất cả tiến trình đã hoàn thành
 
-# Thuật toán Priority Scheduling Sắp xếp các tiến trình theo độ ưu tiên. Tiến trình có độ ưu tiên cao sẽ được xử lý trước.
+# Thuật toán Priority Scheduling
 def priority_scheduling(tien_trinh_list):
-    # Sắp xếp danh sách tiến trình theo độ ưu tiên tăng dần
-    tien_trinh_list.sort(key=lambda x: x.do_uu_tien) # lambda x: x.do_uu_tien là một hàm ẩn danh, trong đó x là đối tượng trong tien_trinh_list. Hàm này trả về giá trị của thuộc tính do_uu_tien của đối tượng x.
+    tien_trinh_list.sort(key=lambda x: x.do_uu_tien)  # Sắp xếp danh sách tiến trình theo độ ưu tiên tăng dần
     thoi_gian_cho = 0  # Khởi tạo thời gian chờ ban đầu
     for tien_trinh in tien_trinh_list:
         tien_trinh.thoi_gian_cho = thoi_gian_cho  # Gán thời gian chờ cho tiến trình hiện tại
@@ -58,27 +55,35 @@ def in_tien_trinh(tien_trinh_list):
     for tien_trinh in tien_trinh_list:
         print(f"{tien_trinh.id}\t{tien_trinh.thoi_gian_chay}\t\t{tien_trinh.thoi_gian_cho}\t\t{tien_trinh.thoi_gian_hoan_thanh}\t\t\t{tien_trinh.do_uu_tien}")
 
-# Dữ liệu mẫu
-tien_trinh_list = [
-    TienTrinh(1, 24, 2),
-    TienTrinh(2, 3, 1),
-    TienTrinh(3, 3, 3),
-    TienTrinh(3, 3, 2)
-]
+# Nhập dữ liệu mẫu từ terminal
+def nhap_du_lieu():
+    so_luong = int(input("Nhập số lượng tiến trình: "))
+    tien_trinh_list = []
+    for i in range(so_luong):
+        id = i + 1
+        thoi_gian_chay = int(input(f"Nhập thời gian chạy của tiến trình {id}: "))
+        do_uu_tien = int(input(f"Nhập độ ưu tiên của tiến trình {id}: "))
+        tien_trinh_list.append(TienTrinh(id, thoi_gian_chay, do_uu_tien))
+    return tien_trinh_list
 
-print("First-Come, First-Served (FCFS)")
-fcfs(tien_trinh_list)
-in_tien_trinh(tien_trinh_list)
+# Chương trình chính
+if __name__ == "__main__":
+    tien_trinh_list = nhap_du_lieu()
 
-print("\nShortest Job First (SJF)")
-sjf(tien_trinh_list)
-in_tien_trinh(tien_trinh_list)
+    print("First-Come, First-Served (FCFS)")
+    fcfs(tien_trinh_list)
+    in_tien_trinh(tien_trinh_list)
 
-quantum = 4
-print("\nRound Robin (RR) với Quantum =", quantum)
-round_robin(tien_trinh_list, quantum)
-in_tien_trinh(tien_trinh_list)
+    print("\nShortest Job First (SJF)")
+    sjf(tien_trinh_list)
+    in_tien_trinh(tien_trinh_list)
 
-print("\nPriority Scheduling")
-priority_scheduling(tien_trinh_list)
-in_tien_trinh(tien_trinh_list)
+    quantum = int(input("\nNhập Quantum cho Round Robin (RR): "))
+    print("\nRound Robin (RR) với Quantum =", quantum)
+    round_robin(tien_trinh_list, quantum)
+    in_tien_trinh(tien_trinh_list)
+
+    print("\nPriority Scheduling")
+    priority_scheduling(tien_trinh_list)
+    in_tien_trinh(tien_trinh_list)
+
