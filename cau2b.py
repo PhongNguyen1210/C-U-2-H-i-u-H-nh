@@ -24,15 +24,14 @@ def fcfs(tien_trinh_list):
 
 # Thuật toán Shortest Job First (SJF)
 def sjf(tien_trinh_list):
+    tien_trinh_list.sort(key=lambda x: x.thoi_gian_xu_ly)  # Sắp xếp danh sách tiến trình theo thời gian xử lý tăng dần
     thoi_gian = 0  # Khởi tạo thời gian ban đầu
-    tien_trinh_list.sort(key=lambda x: (x.thoi_diem_vao, x.thoi_gian_xu_ly))  # Sắp xếp danh sách tiến trình theo thời điểm vào và thời gian xử lý
-    thoi_gian = 0
     for tien_trinh in tien_trinh_list:
         if thoi_gian < tien_trinh.thoi_diem_vao:
             thoi_gian = tien_trinh.thoi_diem_vao
-        tien_trinh.thoi_gian_cho = thoi_gian - tien_trinh.thoi_diem_vao
-        tien_trinh.thoi_gian_hoan_thanh = thoi_gian + tien_trinh.thoi_gian_xu_ly
-        thoi_gian += tien_trinh.thoi_gian_xu_ly
+        tien_trinh.thoi_gian_cho = thoi_gian - tien_trinh.thoi_diem_vao  # Gán thời gian chờ cho tiến trình hiện tại
+        tien_trinh.thoi_gian_hoan_thanh = thoi_gian + tien_trinh.thoi_gian_xu_ly  # Tính thời gian hoàn thành
+        thoi_gian += tien_trinh.thoi_gian_xu_ly  # Cập nhật thời gian cho tiến trình tiếp theo
 
 # Thuật toán Round Robin (RR)
 def round_robin(tien_trinh_list, quantum):
@@ -90,7 +89,7 @@ def nhap_du_lieu():
         do_uu_tien = int(input(f"Nhập độ ưu tiên của tiến trình {id}: "))
         tien_trinh_list.append(TienTrinh(id, thoi_diem_vao, thoi_gian_xu_ly, do_uu_tien))
     return tien_trinh_list
-    
+
 # Chương trình chính
 if __name__ == "__main__":
     tien_trinh_list = nhap_du_lieu()
@@ -108,6 +107,3 @@ if __name__ == "__main__":
     round_robin(tien_trinh_list, quantum)
     in_tien_trinh(tien_trinh_list)
 
-    print("\nPriority Scheduling")
-    priority_scheduling(tien_trinh_list)
-    in_tien_trinh(tien_trinh_list)
