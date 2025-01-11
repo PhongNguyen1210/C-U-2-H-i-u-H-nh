@@ -107,3 +107,7 @@ if __name__ == "__main__":
     round_robin(tien_trinh_list, quantum)
     in_tien_trinh(tien_trinh_list)
 
+    print("\nPriority Scheduling")
+    priority_scheduling(tien_trinh_list)
+    in_tien_trinh(tien_trinh_list)
+
