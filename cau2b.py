@@ -56,17 +56,6 @@ def round_robin(tien_trinh_list, quantum):
         # Loại bỏ các tiến trình đã hoàn thành khỏi hàng đợi
         queue = [tien_trinh for tien_trinh in queue if tien_trinh.thoi_gian_xu_ly > 0]
 
-# Thuật toán Priority Scheduling
-def priority_scheduling(tien_trinh_list):
-    thoi_gian = 0  # Khởi tạo thời gian ban đầu
-    tien_trinh_list.sort(key=lambda x: (x.do_uu_tien, x.thoi_diem_vao))  # Sắp xếp danh sách tiến trình theo độ ưu tiên và thời điểm vào
-    for tien_trinh in tien_trinh_list:
-        if thoi_gian < tien_trinh.thoi_diem_vao:
-            thoi_gian = tien_trinh.thoi_diem_vao
-        tien_trinh.thoi_gian_cho = thoi_gian - tien_trinh.thoi_diem_vao  # Gán thời gian chờ cho tiến trình hiện tại
-        tien_trinh.thoi_gian_hoan_thanh = thoi_gian + tien_trinh.thoi_gian_xu_ly  # Tính thời gian hoàn thành
-        thoi_gian += tien_trinh.thoi_gian_xu_ly  # Cập nhật thời gian cho tiến trình tiếp theo
-
 # Hàm in thông tin các tiến trình
 def in_tien_trinh(tien_trinh_list):
     tong_thoi_gian_cho = 0
@@ -107,7 +96,4 @@ if __name__ == "__main__":
     round_robin(tien_trinh_list, quantum)
     in_tien_trinh(tien_trinh_list)
 
-    print("\nPriority Scheduling")
-    priority_scheduling(tien_trinh_list)
-    in_tien_trinh(tien_trinh_list)
 
