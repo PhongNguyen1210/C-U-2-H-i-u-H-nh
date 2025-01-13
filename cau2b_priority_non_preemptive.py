@@ -1,5 +1,6 @@
-from random import randint
-#priority - non-preemptive
+from queue import PriorityQueue
+#priority - preemptive
+
 
 # Lớp Tiến Trình
 class TienTrinh:
@@ -24,16 +25,31 @@ def nhap_du_lieu():
         tien_trinh_list.append(TienTrinh(id, thoi_diem_vao, thoi_gian_xu_ly, do_uu_tien))
     return tien_trinh_list
 
-# Thuật toán Priority Scheduling không chiếm dụng
-def priority_scheduling(tien_trinh_list):
+# Thuật toán Priority Scheduling chiếm dụng
+def preemptive_priority_scheduling(tien_trinh_list):
     thoi_gian = 0
-    tien_trinh_list.sort(key=lambda x: (x.do_uu_tien, x.thoi_diem_vao))
-    for tien_trinh in tien_trinh_list:
-        if thoi_gian < tien_trinh.thoi_diem_vao:
-            thoi_gian = tien_trinh.thoi_diem_vao
-        tien_trinh.thoi_gian_cho = thoi_gian - tien_trinh.thoi_diem_vao
-        thoi_gian += tien_trinh.thoi_gian_xu_ly
-        tien_trinh.thoi_gian_hoan_thanh = thoi_gian
+    pq = PriorityQueue()
+    tien_trinh_list.sort(key=lambda x: x.thoi_diem_vao)
+    index = 0
+    while not pq.empty() or index < len(tien_trinh_list):
+        while index < len(tien_trinh_list) and tien_trinh_list[index].thoi_diem_vao <= thoi_gian:
+            pq.put((tien_trinh_list[index].do_uu_tien, tien_trinh_list[index].thoi_diem_vao, tien_trinh_list[index]))
+            index += 1
+        if not pq.empty():
+            _, _, tien_trinh = pq.get()
+            if tien_trinh.thoi_gian_xu_ly_goc == tien_trinh.thoi_gian_xu_ly:
+                tien_trinh.thoi_gian_cho += thoi_gian - tien_trinh.thoi_diem_vao
+            else:
+                tien_trinh.thoi_gian_cho += thoi_gian - tien_trinh.thoi_gian_hoan_thanh
+            thoi_gian += 1
+            tien_trinh.thoi_gian_xu_ly -= 1
+            if tien_trinh.thoi_gian_xu_ly > 0:
+                tien_trinh.thoi_gian_hoan_thanh = thoi_gian
+                pq.put((tien_trinh.do_uu_tien, thoi_gian, tien_trinh))
+            else:
+                tien_trinh.thoi_gian_hoan_thanh = thoi_gian
+        else:
+            thoi_gian += 1
 
 # Hàm in thông tin các tiến trình
 def in_tien_trinh(tien_trinh_list):
@@ -50,6 +66,6 @@ def in_tien_trinh(tien_trinh_list):
 if __name__ == "__main__":
     tien_trinh_list = nhap_du_lieu()
 
-    print("\nPriority Scheduling")
-    priority_scheduling(tien_trinh_list)
+    print("\nPreemptive Priority Scheduling")
+    preemptive_priority_scheduling(tien_trinh_list)
     in_tien_trinh(tien_trinh_list)
