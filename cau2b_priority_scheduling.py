@@ -1,5 +1,4 @@
 from random import randint
-#priority - non-preemptive
 
 # Lớp Tiến Trình
 class TienTrinh:
@@ -14,6 +13,7 @@ class TienTrinh:
 
 # Hàm nhập dữ liệu từ terminal
 def nhap_du_lieu():
+    # Nhập số lượng tiến trình từ người dùng
     so_luong = int(input("Nhập số lượng tiến trình: "))
     tien_trinh_list = []
     for i in range(so_luong):
@@ -27,6 +27,7 @@ def nhap_du_lieu():
 # Thuật toán Priority Scheduling không chiếm dụng
 def priority_scheduling(tien_trinh_list):
     thoi_gian = 0
+    # Sắp xếp danh sách tiến trình theo độ ưu tiên và thời điểm vào
     tien_trinh_list.sort(key=lambda x: (x.do_uu_tien, x.thoi_diem_vao))
     for tien_trinh in tien_trinh_list:
         if thoi_gian < tien_trinh.thoi_diem_vao:
@@ -42,14 +43,19 @@ def in_tien_trinh(tien_trinh_list):
     for tien_trinh in tien_trinh_list:
         print(f"{tien_trinh.id}\t{tien_trinh.thoi_diem_vao}\t\t{tien_trinh.thoi_gian_xu_ly_goc}\t\t{tien_trinh.thoi_gian_cho}\t\t{tien_trinh.thoi_gian_hoan_thanh}\t\t\t{tien_trinh.do_uu_tien}")
         tong_thoi_gian_cho += tien_trinh.thoi_gian_cho
+    # Tính toán và in ra thời gian chờ trung bình
     thoi_gian_cho_trung_binh = tong_thoi_gian_cho / len(tien_trinh_list)
     thoi_gian_cho_str = " + ".join(str(tien_trinh.thoi_gian_cho) for tien_trinh in tien_trinh_list)
     print(f"Thời gian chờ trung bình: ({thoi_gian_cho_str}) / {len(tien_trinh_list)} = {thoi_gian_cho_trung_binh:.2f}")
 
 # Chương trình chính
 if __name__ == "__main__":
+    # Nhập dữ liệu tiến trình từ người dùng
     tien_trinh_list = nhap_du_lieu()
 
+    # Thực hiện thuật toán Priority Scheduling
     print("\nPriority Scheduling")
     priority_scheduling(tien_trinh_list)
+
+    # In thông tin các tiến trình sau khi sắp xếp
     in_tien_trinh(tien_trinh_list)
